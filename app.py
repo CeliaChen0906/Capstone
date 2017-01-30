@@ -1,11 +1,8 @@
 from flask import Flask, render_template, request, redirect
-from flask_googlemaps import GoogleMaps
 import pandas as pd
-from collections import defaultdict
+import numpy as np
 
 app = Flask(__name__)
-app.config['GOOGLEMAPS_KEY'] = "AIzaSyAZrVQ1H1eTGMz_xt8cFuU4JPj3OY-7E9s"
-GoogleMaps(app)
 
 @app.route('/')
 def main():
@@ -23,8 +20,8 @@ def index():
         #get coordinates
         sflat = request.args.get('lat')
         sflong = request.args.get('long')
-        sf_distance = defaultdict(int)
-        ny_rec = defaultdict(int)
+        sf_distance = dict()
+        ny_rec = dict()
         for i in range(len(sfdfc)):
             sf_distance[i] = np.sqrt((sflat - sfdfc['INTPTLAT'][i])**2 + (sflong - sfdfc['INTPTLONG                                                                                                                  '][i])**2)
         for index, v in sf_distance.iteritems():
