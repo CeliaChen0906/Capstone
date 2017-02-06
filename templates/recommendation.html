@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="celiachen">
+
+    <title>New home in New York!!!</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../static/css/stylish-portfolio.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+        #floating-panel {
+  position: absolute;
+  top: 10px;
+  left: 25%;
+  z-index: 5;
+  background-color: #fff;
+  padding: 5px;
+  border: 1px solid #999;
+  text-align: center;
+  font-family: 'Roboto','sans-serif';
+  line-height: 30px;
+  padding-left: 10px;
+}
+
+      #floating-panel {
+        background-color: #fff;
+        border: 1px solid #999;
+        left: 25%;
+        padding: 5px;
+        position: absolute;
+        top: 10px;
+        z-index: 5;
+      }
+    </style>
+
+    
+
+</head>
+
+<body>
+
+    
+    <!-- Callout -->
+    <aside class="callout">
+        <div class="text-vertical-center">
+            <h1>Tada!</h1> <br>
+            <h2>Here are the similar neighborhoods in New York City<br> according to your favorite one in San Francisco.<br>Drag around the map to check all recommendations,<br> drop the little guy on the lower right corner to check out the street view!
+             </h2>
+        </div>
+    </aside>
+
+    
+
+    <!-- Map -->
+    
+    <div id='map'></div>
+       <script type="text/javascript">
+    function initMap() {
+       var myLatlng = {lat: 40.76, lng: -73.92};
+
+        var myOptions = {
+        zoom: 11,
+        center: myLatlng,
+        streetViewControl: true,
+        mapTypeControl: true,
+        zoomControl: true,
+        scrollwheel: false
+    };
+    
+        var map = new google.maps.Map(document.getElementById("map"), myOptions);
+
+        var heatmap = new google.maps.visualization.HeatmapLayer({
+                                            data: getPoints(),
+                                            map: map,
+                                            radius: 25
+                                            });        
+}
+
+           function getPoints() {
+                                return [{{ to_gmap|join(', ') }}]
+                                }
+
+    </script>
+        <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZrVQ1H1eTGMz_xt8cFuU4JPj3OY-7E9s&libraries=visualization&callback=initMap">
+    </script>
+    
+<!-- Call to Action -->
+    <aside class="call-to-action bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3>Take me back to San Francisco!</h3>                  
+                    <a href="/index" class="btn btn-lg btn-light">Back to SF</a>
+                   
+                </div>
+            </div>
+        </div>
+    </aside>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>Celia Zheyuan Chen</strong>
+                    </h4>
+                    <p>New York, NY</p>
+                    <ul class="list-unstyled">
+                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:name@example.com">zheyuan.chen@mg.thedataincubator.com</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <ul class="list-inline">
+                        <li>
+                            <a href="https://www.linkedin.com/in/celia-zheyuan-chen"><i class="fa fa-linkedin fa-fw fa-3x"></i></a>
+                        </li>
+                        <li>
+                            <a href="https://github.com/CeliaChen0906"><i class="fa fa-github fa-fw fa-3x"></i></a>
+                        </li>
+                        <li>
+                            <a href="mailto:zheyuan.chen@mg.thedataincubator.com"><i class="fa fa-envelope fa-fw fa-3x"></i></a>
+                        </li>
+                    </ul>
+                    <hr class="small">
+                    <p class="text-muted">Copyright &copy; CeliaChen2017</p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="../static/js/jquery.js">
+        $("#ex2").slider({});
+    </script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../static/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script type="text/javascript">
+        function initialize() {
+    var myLatlng = new google.maps.LatLng({{ geolat }}, {{ geolong }});
+
+    var myOptions = {
+        zoom: 5,
+        center: myLatlng,
+        streetViewControl: true,
+        mapTypeControl: true,
+        zoomControl: true,
+        mapTypeId: google.maps.MapTypeId.SATELLITE
+    };
+    map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    var marker = new google.maps.Marker({
+        draggable: true,
+        position: myLatlng,
+        map: map,
+        title: "Your location"
+    });
+
+    google.maps.event.addListener(marker, 'dragend', function (event) {
+            sendCoords(event.latLng.lat(),event.latLng.lng() )
+    });
+
+    // close popup window
+    google.maps.event.addListener(map, 'click', function() {
+    infowindow.close();
+    });
+
+    </script>>
+
+
+    <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    //#to-top button appears after scrolling
+    var fixed = false;
+    $(document).scroll(function() {
+        if ($(this).scrollTop() > 250) {
+            if (!fixed) {
+                fixed = true;
+                // $('#to-top').css({position:'fixed', display:'block'});
+                $('#to-top').show("slow", function() {
+                    $('#to-top').css({
+                        position: 'fixed',
+                        display: 'block'
+                    });
+                });
+            }
+        } else {
+            if (fixed) {
+                fixed = false;
+                $('#to-top').hide("slow", function() {
+                    $('#to-top').css({
+                        display: 'none'
+                    });
+                });
+            }
+        }
+    });
+    // Disable Google Maps scrolling
+    // See http://stackoverflow.com/a/25904582/1607849
+    // Disable scroll zooming and bind back the click event
+    var onMapMouseleaveHandler = function(event) {
+        var that = $(this);
+        that.on('click', onMapClickHandler);
+        that.off('mouseleave', onMapMouseleaveHandler);
+        that.find('iframe').css("pointer-events", "none");
+    }
+    var onMapClickHandler = function(event) {
+            var that = $(this);
+            // Disable the click handler until the user leaves the map area
+            that.off('click', onMapClickHandler);
+            // Enable scrolling zoom
+            that.find('iframe').css("pointer-events", "auto");
+            // Handle the mouse leave event
+            that.on('mouseleave', onMapMouseleaveHandler);
+        }
+        // Enable map zooming with mouse scroll when the user clicks the map
+    $('.map').on('click', onMapClickHandler);
+    </script>
+    <script type="text/javascript">
+    var sliderA = new Slider("#ex12a", { id: "slider12a", min: 0, max: 10, value: 5 });
+    var sliderB = new Slider("#ex12b", { id: "slider12b", min: 0, max: 10, range: true, value: [3, 7] });
+    var sliderC = new Slider("#ex12c", { id: "slider12c", min: 0, max: 10, range: true, value: [3, 7] });
+    var slider = new Slider('#ex2', {});
+    </script>
+
+</body>
+
+</html>

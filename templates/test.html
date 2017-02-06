@@ -24,6 +24,8 @@
       html, body { height: 100%; margin: 0; padding: 0; }
       #map { height: 100%; }
     </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?v=3.11&sensor=false" type="text/javascript"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -77,7 +79,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12 text-center">
-                    {{rec}}
+       
                     <h2><br>Tell us your beloved neighborhood in your city, <br>
                     Let's find you a new home in New York City!</h2>
                 </div>
@@ -215,55 +217,71 @@
         <!-- /.container -->
     </section>
 
-    <!-- Call to Action -->
-    <aside class="call-to-action bg-primary">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <h3>Drag the marker to your favorite neighborhood!</h3>                  
-                    <a href="#Recommendation" class="btn btn-lg btn-light">Done</a>
-                    <a href="#" class="btn btn-lg btn-dark">Reset</a>
-                </div>
-            </div>
-        </div>
-    </aside>
+    
 
     <!-- Map -->
+  <form id='welcome' method='post' action='index'> 
     <section id="contact" class="map">
-       <div id='map'></div>
-   <script type="text/javascript">
+      Lat:
+    <input type='text' id="lat" name="lat" val="37.755119" />
+      Long:
+    <input type = 'text' id="long" name="long" val="-122.442930" />
+        <div id='map'></div>     
+        <script type="text/javascript">
+          var map;
+            function initMap() {
+       var myLatlng = {lat: 37.755119, lng: -122.442930};
 
-function initMap() {
-   var myLatlng = {lat: 37.755119, lng: -122.442930};
-
-    var myOptions = {
+        var myOptions = {
         zoom: 12,
         center: myLatlng,
         streetViewControl: true,
         mapTypeControl: true,
-        zoomControl: true
+        zoomControl: true,
+        scrollwheel: false
     };
     
-    var map = new google.maps.Map(document.getElementById("map"), myOptions);
-
-   var marker = new google.maps.Marker({
+        map = new google.maps.Map(document.getElementById("map"), myOptions);
+        
+        var marker = new google.maps.Marker({
         draggable: true,
         position: myLatlng,
         map: map,
         title: "I LOVE here!"
     });
-
-    google.maps.event.addListener(marker, 'dragend', function (event) {
+         google.maps.event.addListener(marker, 'dragend', function (event) {
+            document.getElementById("lat").value = event.latLng.lat();
+            document.getElementById("long").value = event.latLng.lng();         
+        });
+        google.maps.event.addListener(marker, 'dragend', function (event) {
             sendCoords(event.latLng.lat(),event.latLng.lng() )
-   });
+    });
+        
+        
+                 
 }
-
     </script>
         <script async defer
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAZrVQ1H1eTGMz_xt8cFuU4JPj3OY-7E9s&callback=initMap">
-    </script>
-    </section>
-
+    </script>  
+        </section>  
+            
+      <aside class="call-to-action bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3>Drag the marker to your favorite neighborhood!</h3>                  
+                    <button type="submit" class="btn btn-default">submit</button>
+                </div>
+            </div>
+        </div>
+    </aside>
+        
+            </form>
+        
+    
+<!-- Call to Action -->
+   
     <!-- Footer -->
     <footer>
         <div class="container">
@@ -297,13 +315,9 @@ function initMap() {
     </footer>
 
     <!-- jQuery -->
-    <script src="js/jquery.js">
-        $("#ex2").slider({});
-    </script>
-
+    
     <!-- Bootstrap Core JavaScript -->
-    <script src="js/bootstrap.min.js"></script>
-
+    
     <!-- Custom Theme JavaScript -->
     <script type="text/javascript">
         function initialize() {
@@ -327,7 +341,8 @@ function initMap() {
     });
 
     google.maps.event.addListener(marker, 'dragend', function (event) {
-            sendCoords(event.latLng.lat(),event.latLng.lng() )
+            document.getElementById("lat").value = event.latLng.lat();
+            document.getElementById("long").value = event.latLng.lng();
     });
 
     // close popup window
