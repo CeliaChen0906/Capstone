@@ -35,5 +35,5 @@ def recommendation():
         )
 if __name__ == '__main__':
     #debug = True
-    app.run(host='104.131.67.119')
-#
+    app.run()
+#host='104.131.67.119'
