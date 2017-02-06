@@ -3,6 +3,4 @@ pandas==0.17.0
 numpy==1.11.2
 gunicorn==19.3.0
 Jinja2==2.7.2
-os
-math
-collections
+
