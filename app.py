@@ -34,6 +34,6 @@ def recommendation():
             to_gmap=to_gmap
         )
 if __name__ == '__main__':
-    #debug = True
+    debug = True
     app.run()
 #host='104.131.67.119'

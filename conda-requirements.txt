@@ -1,1 +1,4 @@
-scipy==0.15.1
+scipy
+numpy
+pandas
+
