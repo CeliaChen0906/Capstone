@@ -11,10 +11,15 @@ nydfc = pd.read_csv(join(_cwd, '../data/nydfc.csv'), index_col = 0)
 
 
 def recommendation_coor(sflat, sflong):
-#recommendation system
-#input:coordinates in SF
-#sflat = 37.776745
-#sflong = -122.416745
+"""
+    Generate recommedation coordinates.
+
+    Arguments:
+    San Francisco city Latitude, longitude
+
+    Returns:
+    Recommended coordinates in New York
+"""
 #find FIPS
     sf_distance = defaultdict(int)
     ny_rec = defaultdict(int)
